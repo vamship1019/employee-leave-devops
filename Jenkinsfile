@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Install dependencies') {
+            steps {
+                sh '''
+                    python3 -m venv .venv-ci
+                    .venv-ci/bin/python -m pip install --upgrade pip
+                    .venv-ci/bin/python -m pip install -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Run tests') {
+            steps {
+                sh '.venv-ci/bin/python -m pytest -q'
+            }
+        }
+
+        stage('Build Docker image') {
+            steps {
+                sh 'docker build -t employee-leave-app:${BUILD_NUMBER} .'
+            }
+        }
+    }
+}
