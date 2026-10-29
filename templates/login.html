@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee Leave Management - Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef3f9;
+            margin: 0;
+            padding: 40px 16px;
+        }
+        .card {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px #0001;
+        }
+        label { display: block; margin: 14px 0 6px; }
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            border: 0;
+            border-radius: 6px;
+            color: white;
+            background: #0d6efd;
+            cursor: pointer;
+        }
+        .message { color: #b02a37; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Employee Leave Management</h2>
+        <h3>Login</h3>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <label for="username">Username</label>
+            <input id="username" name="username" required>
+
+            <label for="password">Password</label>
+            <input id="password" name="password"
+                   type="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
