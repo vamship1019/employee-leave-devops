@@ -1,21 +1,22 @@
-
 pipeline {
     agent any
 
     stages {
         stage('Install dependencies') {
             steps {
-                bat 'py -3 --version'
-                bat 'py -3 -m venv .venv-ci'
-                bat '.venv-ci\\Scripts\\python.exe -m pip install --upgrade pip'
-                bat '.venv-ci\\Scripts\\python.exe -m pip install -r requirements.txt'
-                bat '.venv-ci\\Scripts\\python.exe -m pip install pytest'
+                bat '''
+                    "C:\\Users\\POTHAGALLA VAMSHI\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" --version
+                    "C:\\Users\\POTHAGALLA VAMSHI\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m venv .venv-ci
+                    ".venv-ci\\Scripts\\python.exe" -m pip install --upgrade pip
+                    ".venv-ci\\Scripts\\python.exe" -m pip install -r requirements.txt
+                    ".venv-ci\\Scripts\\python.exe" -m pip install pytest
+                '''
             }
         }
 
         stage('Run tests') {
             steps {
-                bat '.venv-ci\\Scripts\\python.exe -m pytest -q'
+                bat '".venv-ci\\Scripts\\python.exe" -m pytest -q'
             }
         }
 
