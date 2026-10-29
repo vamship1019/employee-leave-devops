@@ -1,26 +1,27 @@
+
 pipeline {
     agent any
 
     stages {
         stage('Install dependencies') {
             steps {
-                sh '''
-                    python3 -m venv .venv-ci
-                    .venv-ci/bin/python -m pip install --upgrade pip
-                    .venv-ci/bin/python -m pip install -r requirements.txt
-                '''
+                bat 'py -3 --version'
+                bat 'py -3 -m venv .venv-ci'
+                bat '.venv-ci\\Scripts\\python.exe -m pip install --upgrade pip'
+                bat '.venv-ci\\Scripts\\python.exe -m pip install -r requirements.txt'
+                bat '.venv-ci\\Scripts\\python.exe -m pip install pytest'
             }
         }
 
         stage('Run tests') {
             steps {
-                sh '.venv-ci/bin/python -m pytest -q'
+                bat '.venv-ci\\Scripts\\python.exe -m pytest -q'
             }
         }
 
         stage('Build Docker image') {
             steps {
-                sh 'docker build -t employee-leave-app:${BUILD_NUMBER} .'
+                bat 'docker build -t employee-leave-app:%BUILD_NUMBER% .'
             }
         }
     }
